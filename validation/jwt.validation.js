@@ -3,6 +3,7 @@ const User = require("../model/user.model");
 const { secretKey } = require("../config/server.config");
 exports.verifyJwt = async (req, res, next) => {
   try {
+    console.log("req.headers",req.header,req.headers.token);
     let tokenFull = req.header('Authorization');
     let token= tokenFull.split(" ")[1]
    

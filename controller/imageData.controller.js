@@ -1,10 +1,14 @@
 const ImageData = require("../model/imageData.model")
 const Tesseract = require("tesseract.js")
+const sharp = require("sharp");
 
 exports.createImgData = async(req,res)=>{
     try{
-    // console.log(req.body,"req.body",req.file)
-    const result = await Tesseract.recognize(req.file.buffer);
+        const preprocessedImageBuffer = await sharp(req.file.buffer)
+        .resize({ width: 800 }) // Resize as needed
+        .normalize() // Enhance contrast
+        .toBuffer();
+    const result = await Tesseract.recognize(preprocessedImageBuffer);
 console.log("result",result)
     const imgDataObj ={
         filename:req.file.originalname,
